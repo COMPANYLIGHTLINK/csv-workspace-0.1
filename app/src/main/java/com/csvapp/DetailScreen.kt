@@ -3,6 +3,7 @@ package com.csvapp
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -12,7 +13,7 @@ import androidx.navigation.NavController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(viewModel: UserViewModel, srNo: Int, navController: NavController) {
-    val user by viewModel.selectedUser.collectAsStateWithLifecycle()
+    val user by viewModel.selectedUser.collectAsStateWithLifecycle(initialValue = null)
 
     LaunchedEffect(srNo) {
         viewModel.loadUserDetails(srNo)
@@ -48,7 +49,7 @@ fun DetailScreen(viewModel: UserViewModel, srNo: Int, navController: NavControll
                 Spacer(modifier = Modifier.height(8.dp))
                 Text("Gender: ${it.Gender}", style = MaterialTheme.typography.bodyLarge)
             }
-        } ?: run {
+        } ?: Box(modifier = Modifier.fillMaxSize().padding(padding)) {
             CircularProgressIndicator(modifier = Modifier.padding(16.dp))
         }
     }
